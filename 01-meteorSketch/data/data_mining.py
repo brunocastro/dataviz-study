@@ -1,39 +1,16 @@
-# importing csv module 
-import csv 
-  
-# csv file name 
-filename = "gross_data.csv"
-  
-# initializing the titles and rows list 
-fields = [] 
-rows = [] 
-  
-# reading csv file 
-with open(filename, 'r') as csvfile:
-    csvreader = csv.reader(csvfile) 
-    fields = csvreader.next() 
-    for row in csvreader: 
-        rows.append(row) 
-    # get total number of rows 
-    print("Total no. of rows: %d"%(csvreader.line_num)) 
-  
-# printing the field names 
-print('Field names are:' + ', '.join(field for field in fields)) 
+# importing pandas dataframing 
+import pandas as pd 
+import datetime
 
-for row in rows:
-    float(row[4])
+# parse gross data of csv on a specific columns
+meteorList = pd.read_csv("gross_data.csv", usecols = ['name','recclass','mass','fall','year','reclat','reclong'])
 
-# Sort list by mass
-def takeMass(elem):
-    return elem[4]
+# Sort Meteor List with Mass
+meteorList.sort_values(by='mass', ascending=False, inplace=True)
 
-rows.sort(key=takeMass, reverse=True)
+# for row in meteorList:
+#     memory = row['year'].strftime("%m/%y")
+#     print(memory)
 
-
-#  printing first 5 rows 
-print('\nFirst 5 rows are:\n') 
-for row in rows[:10]: 
-    # parsing each column of a row 
-    for col in row: 
-        print("%10s"%col), 
-    print('\n') 
+# printing first 10 rows 
+print(meteorList[:10]['mass'])
