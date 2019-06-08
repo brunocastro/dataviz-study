@@ -2,17 +2,17 @@
 import pandas as pd 
 
 # parse gross data of csv on a specific columns
-meteorList = pd.read_csv("gross_data.csv", usecols = ['name','recclass','mass','fall','year','reclat','reclong'])
+meteorList = pd.read_csv("gross_data.csv", usecols = ['name','mass','fall','year','reclat','reclong'])
 
 # remove mass NaN
 meteorList.dropna(subset=['mass','reclat','reclong'], inplace=True)
 
-# Setup float format and revert Nunbers notation on mass
-pd.options.display.float_format = '{:,.4f}'.format
-meteorList["mass"] = meteorList["mass"].astype(int)
-
 # Sort Meteor List with Mass
 meteorList.sort_values(by='mass', ascending=False, inplace=True)
+
+# Setup float format and revert Nunbers notation on mass
+pd.options.display.float_format = '{:.4f}'.format
+meteorList["mass"] = meteorList["mass"].astype(float)
 
 clearData = meteorList.loc[(meteorList["fall"]=="Found")]
 
