@@ -4,6 +4,7 @@ import processing.pdf.*;
 //global variables
 PShape baseMap;
 String csv[];
+String name;
 String myData[][];
 PFont fontFace;
 PFont fontFaceBold;
@@ -27,32 +28,46 @@ void setup() {
 
 //Draw
 void draw() {
-  beginRecord(PDF, "output.pdf"); 
+  // set color mode
+  colorMode(HSB, 360, 100, 100,100);
+  
+  //PDF recorder
+  beginRecord(PDF, "output.pdf");
+  
+  // print map on background
   shape(baseMap, 0, 0, width, height);
-    for (int i=1; i<myData.length; i++) {
+  
+  // plot eliptical marks  
+  for (int i=1; i<myData.length; i++) {
     noStroke();
+    // Format size and position Mark  
     float graphLong = map(float(myData[i][6]), -180, 180, 0, width);
     float graphLat = map(float(myData[i][5]), 90, -90, 0, height);
     float mass = 0.04*sqrt(float(myData[i][2]))/PI;
-    fill(255,0,0,75);
+    // Format color and opacity
+    float markColor = map(float(myData[i][2]),0,60000000,36,-36);
+    float markBright = map(float(myData[i][2]),0,60000000,90,100);
+    fill(markColor,100,markBright,60);
+    // Make mark
     ellipse(graphLong,graphLat,int(mass),int(mass));
     
     //Plot text on bigest marks
     if (mass > 50) {
+      name = myData[i][1];
       fill(0);
-      if(graphLong > width/2) {
+      if((graphLong > width/2) || (name.equals("Chupaderos"))) {
         textAlign(LEFT);
         textFont(fontFaceBold);
-        text(myData[i][1],graphLong + mass, graphLat);
+        text(name,graphLong + mass, graphLat);
         textFont(fontFace);
         text(myData[i][4],graphLong + mass, graphLat+15);
         noFill();
         stroke(0);
         line(graphLong, graphLat, graphLong+mass, graphLat);
-      } if (graphLong <= width/2) {
+      } else {
         textAlign(RIGHT);
         textFont(fontFaceBold);
-        text(myData[i][1],graphLong - mass, graphLat);
+        text(name,graphLong - mass, graphLat);
         textFont(fontFace);
         text(myData[i][4],graphLong - mass, graphLat+15);
         noFill();

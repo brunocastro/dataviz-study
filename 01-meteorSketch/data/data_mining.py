@@ -8,7 +8,7 @@ meteorList = pd.read_csv("gross_data.csv", usecols = ['name','mass','fall','year
 meteorList.dropna(subset=['mass','reclat','reclong'], inplace=True)
 
 # Sort Meteor List with Mass
-meteorList.sort_values(by='mass', ascending=False, inplace=True)
+meteorList.sort_values(by='mass', ascending=True, inplace=True)
 
 # Setup float format and revert Nunbers notation on mass
 pd.options.display.float_format = '{:.4f}'.format
