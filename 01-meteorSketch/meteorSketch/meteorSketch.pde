@@ -27,10 +27,7 @@ void setup() {
 // Data columns: #,name,mass,fall,year,reclat,reclong
 
 //Draw
-void draw() {
-  // set color mode
-  colorMode(HSB, 360, 100, 100,100);
-  
+void draw() { 
   //PDF recorder
   beginRecord(PDF, "output.pdf");
   
@@ -44,10 +41,9 @@ void draw() {
     float graphLong = map(float(myData[i][6]), -180, 180, 0, width);
     float graphLat = map(float(myData[i][5]), 90, -90, 0, height);
     float mass = 0.04*sqrt(float(myData[i][2]))/PI;
-    // Format color and opacity
-    float markColor = map(float(myData[i][2]),0,60000000,36,-36);
-    float markBright = map(float(myData[i][2]),0,60000000,90,100);
-    fill(markColor,100,markBright,60);
+    // Format color
+    float markColor = map(float(myData[i][2]),0,60000000,220,0);
+    fill(255,markColor,0,154);
     // Make mark
     ellipse(graphLong,graphLat,int(mass),int(mass));
     
